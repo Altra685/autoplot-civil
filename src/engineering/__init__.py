@@ -1,8 +1,8 @@
 """
-Modul perhitungan teknik sipil.
+Civil engineering calculation modules.
 
-Konversi satuan, kuat tekan beton, klasifikasi tanah, analisis saringan,
-dan pemadatan Proctor.
+Unit conversion, concrete compressive strength, soil classification, sieve
+analysis, and Proctor compaction.
 """
 from __future__ import annotations
 
