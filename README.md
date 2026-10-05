@@ -1,18 +1,18 @@
 # AutoPlot Civil
 
-Perhitungan dan grafik teknik sipil yang dapat dijalankan langsung di peramban.
+Civil engineering calculations and charts that run directly in the browser.
 
-## Modul
+## Modules
 
-| Modul | Isi |
+| Module | Contents |
 |---|---|
-| Beton | Kuat tekan silinder dengan koreksi rasio h/d (SNI 1974:2011) |
-| Saringan | Kurva distribusi butiran, Cu, Cc, klasifikasi USCS & AASHTO |
-| Pemadatan | Kurva Proctor, MDD, OMC, garis ZAV |
-| Statistik | Rerata, simpangan baku, kekuatan karakteristik, uji kenormalan |
-| Satuan | Konversi satuan teknik sipil |
+| Concrete | Cylinder compressive strength with h/d ratio correction (SNI 1974:2011) |
+| Sieve | Grain-size distribution curve, Cu, Cc, USCS & AASHTO classification |
+| Compaction | Proctor curve, MDD, OMC, zero air voids line |
+| Statistics | Mean, standard deviation, characteristic strength, normality test |
+| Units | Civil engineering unit conversion |
 
-## Menjalankan
+## Running
 
 ```bash
 python -m venv .venv
@@ -21,29 +21,29 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Buka `http://localhost:8501`.
+Open `http://localhost:8501`.
 
-## Menjalankan tes
+## Running tests
 
 ```bash
 python -m pytest tests -q
 ```
 
-## Contoh data
+## Example data
 
-`examples/` berisi berkas CSV contoh untuk setiap modul.
+`examples/` contains a sample CSV file for each module.
 
-## Struktur
+## Structure
 
 ```
-app.py                     aplikasi Streamlit
-src/engineering/           modul perhitungan
-src/visualization/         pembuat grafik
-tests/                     tes unit
-examples/                  data contoh
-docs/                      ringkasan rumus
+app.py                     Streamlit application
+src/engineering/           calculation modules
+src/visualization/         chart builders
+tests/                     unit tests
+examples/                  sample data
+docs/                      formula summary
 ```
 
-## Lisensi
+## License
 
 MIT.
