@@ -1,4 +1,4 @@
-"""Pembuat grafik teknik sipil."""
+"""Civil engineering chart builders."""
 from __future__ import annotations
 from .chart_builder import create_base_figure, export_chart_to_bytes
 from .grain_size import create_grain_size_chart
