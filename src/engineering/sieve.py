@@ -409,16 +409,16 @@ def process_sieve_data(
     # Build soil description
     parts = []
     if gravel_pct > 50.0:
-        parts.append("Dominan Kerikil")
+        parts.append("Gravel-dominant")
     elif sand_pct > 50.0:
-        parts.append("Dominan Pasir")
+        parts.append("Sand-dominant")
     else:
-        parts.append("Dominan Lanau/Lempung")
+        parts.append("Silt/Clay-dominant")
 
     if fines_pct_std > 12.0:
-        parts.append("berbutir halus tinggi")
+        parts.append("high fines content")
     elif fines_pct_std > 5.0:
-        parts.append("sedikit butir halus")
+        parts.append("some fines content")
     else:
         parts.append("bersih")
 
@@ -488,17 +488,17 @@ def to_display_dataframe(processed: SieveProcessedData) -> pd.DataFrame:
     """
     Convert SieveProcessedData to a tidy DataFrame for Streamlit display.
 
-    Returns columns: Ukuran Ayakan (mm), Label, Massa Tertahan (g),
-    % Tertahan, % Kumulatif Tertahan, % Lolos.
+    Returns columns: Sieve Size (mm), Label, Mass Retained (g),
+    % Retained, % Cumulative Retained, % Passing.
     """
     labels = [SIEVE_LABELS.get(s, f"{s:.3f} mm") for s in processed.sieve_sizes_mm]
 
     df = pd.DataFrame({
-        "Ukuran Ayakan (mm)": processed.sieve_sizes_mm,
-        "Label Ayakan": labels,
-        "Massa Tertahan (g)": [round(m, 2) for m in processed.mass_retained_g],
-        "% Tertahan": processed.percent_retained,
-        "% Tertahan Kumulatif": processed.cumulative_retained,
-        "% Lolos": processed.percent_passing,
+        "Sieve Size (mm)": processed.sieve_sizes_mm,
+        "Sieve Label": labels,
+        "Mass Retained (g)": [round(m, 2) for m in processed.mass_retained_g],
+        "% Retained": processed.percent_retained,
+        "% Cumulative Retained": processed.cumulative_retained,
+        "% Passing": processed.percent_passing,
     })
     return df
