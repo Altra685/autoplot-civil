@@ -1,11 +1,8 @@
 """
-AutoPlot Civil — versi publik.
+AutoPlot Civil.
 
-Aplikasi contoh untuk lima perhitungan: kuat tekan beton, analisis saringan,
-pemadatan Proctor, statistik dasar, dan konversi satuan.
-
-Versi ini adalah *subset* dari aplikasi penuh. Modul lanjutan tidak disertakan
-di repositori ini.
+Aplikasi untuk kuat tekan beton, analisis saringan, pemadatan Proctor,
+statistik dasar, dan konversi satuan.
 """
 from __future__ import annotations
 
@@ -23,7 +20,7 @@ from src.visualization import create_grain_size_chart, create_compaction_chart
 
 st.set_page_config(page_title="AutoPlot Civil", layout="wide")
 st.title("AutoPlot Civil")
-st.caption("Perhitungan dan grafik teknik sipil — versi publik")
+st.caption("Perhitungan dan grafik teknik sipil")
 
 tab1, tab2, tab3, tab4 = st.tabs(
     ["Kuat Tekan Beton", "Analisis Saringan", "Pemadatan Proctor", "Statistik"]
