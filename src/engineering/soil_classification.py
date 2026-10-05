@@ -3,7 +3,7 @@ soil_classification.py — USCS & AASHTO Soil Classification
 SNI 03-3637-1994 / ASTM D2487 / AASHTO M 145
 
 Provides:
-  - USCS_NAMES_ID: Indonesian-language USCS soil type names (all 15 types)
+  - USCS_NAMES: USCS soil type names (all 15 types)
   - classify_soil(): wrapper around geolysis + fallback manual classification
   - extract_gradation_params(): D10, D30, D60 via log-linear interpolation
   - _manual_uscs_classify(): standalone fallback (no external libs required)
@@ -19,48 +19,48 @@ from typing import Optional
 import numpy as np
 
 # ---------------------------------------------------------------------------
-# USCS classification names in Indonesian (SNI terminology)
-# All 15 USCS soil types per ASTM D2487
+# USCS classification names (ASTM D2487 terminology)
+# All 15 USCS soil types
 # ---------------------------------------------------------------------------
-USCS_NAMES_ID: dict[str, str] = {
+USCS_NAMES: dict[str, str] = {
     # Coarse-grained soils — Gravels
-    "GW": "Kerikil Bergradasi Baik (Well-graded Gravel)",
-    "GP": "Kerikil Bergradasi Buruk (Poorly-graded Gravel)",
-    "GM": "Kerikil Berlanau (Silty Gravel)",
-    "GC": "Kerikil Berlempung (Clayey Gravel)",
+    "GW": "Well-graded Gravel",
+    "GP": "Poorly-graded Gravel",
+    "GM": "Silty Gravel",
+    "GC": "Clayey Gravel",
     # Coarse-grained soils — Sands
-    "SW": "Pasir Bergradasi Baik (Well-graded Sand)",
-    "SP": "Pasir Bergradasi Buruk (Poorly-graded Sand)",
-    "SM": "Pasir Berlanau (Silty Sand)",
-    "SC": "Pasir Berlempung (Clayey Sand)",
+    "SW": "Well-graded Sand",
+    "SP": "Poorly-graded Sand",
+    "SM": "Silty Sand",
+    "SC": "Clayey Sand",
     # Fine-grained soils — Silts and Clays (LL < 50%) — Low plasticity
-    "ML": "Lanau Anorganik Plastisitas Rendah (Inorganic Silt, Low Plasticity)",
-    "CL": "Lempung Anorganik Plastisitas Rendah–Sedang (Inorganic Clay, Low–Medium Plasticity)",
-    "OL": "Lanau Organik / Lempung Organik Plastisitas Rendah (Organic Silt/Clay, Low Plasticity)",
+    "ML": "Inorganic Silt, Low Plasticity",
+    "CL": "Inorganic Clay, Low–Medium Plasticity",
+    "OL": "Organic Silt/Clay, Low Plasticity",
     # Fine-grained soils — Silts and Clays (LL ≥ 50%) — High plasticity
-    "MH": "Lanau Anorganik Plastisitas Tinggi (Inorganic Silt, High Plasticity / Elastic Silt)",
-    "CH": "Lempung Anorganik Plastisitas Tinggi (Inorganic Clay, High Plasticity / Fat Clay)",
-    "OH": "Lempung Organik Plastisitas Sedang–Tinggi (Organic Clay, Medium–High Plasticity)",
+    "MH": "Inorganic Silt, High Plasticity / Elastic Silt",
+    "CH": "Inorganic Clay, High Plasticity / Fat Clay",
+    "OH": "Organic Clay, Medium–High Plasticity",
     # Highly organic soils
-    "Pt": "Gambut / Tanah Sangat Organik (Peat / Highly Organic Soil)",
+    "Pt": "Peat / Highly Organic Soil",
 }
 
 # ---------------------------------------------------------------------------
-# AASHTO classification descriptions (English + Indonesian)
+# AASHTO classification descriptions
 # ---------------------------------------------------------------------------
-AASHTO_NAMES_ID: dict[str, str] = {
-    "A-1-a": "Material Granular Pilihan (Batu Pecah/Kerikil Kasar) — A-1-a",
-    "A-1-b": "Material Granular Pilihan (Pasir Kasar) — A-1-b",
-    "A-2-4": "Kerikil & Pasir Berlanau/Berlempung (LL≤40, PI≤10) — A-2-4",
-    "A-2-5": "Kerikil & Pasir Berlanau/Berlempung (LL>40, PI≤10) — A-2-5",
-    "A-2-6": "Kerikil & Pasir Berlanau/Berlempung (LL≤40, PI>10) — A-2-6",
-    "A-2-7": "Kerikil & Pasir Berlanau/Berlempung (LL>40, PI>10) — A-2-7",
-    "A-3":   "Pasir Halus (Fine Sand) — A-3",
-    "A-4":   "Tanah Berlanau (Silty Soil) — A-4",
-    "A-5":   "Tanah Berlanau (Silty Soil, Highly Plastic) — A-5",
-    "A-6":   "Tanah Berlempung (Clayey Soil) — A-6",
-    "A-7-5": "Tanah Berlempung Plastis (Plastic Clayey Soil) — A-7-5",
-    "A-7-6": "Tanah Berlempung Sangat Plastis (Highly Plastic Clayey Soil) — A-7-6",
+AASHTO_NAMES: dict[str, str] = {
+    "A-1-a": "Selected Granular Material (Crushed Stone / Coarse Gravel) — A-1-a",
+    "A-1-b": "Selected Granular Material (Coarse Sand) — A-1-b",
+    "A-2-4": "Silty/Clayey Gravel & Sand (LL≤40, PI≤10) — A-2-4",
+    "A-2-5": "Silty/Clayey Gravel & Sand (LL>40, PI≤10) — A-2-5",
+    "A-2-6": "Silty/Clayey Gravel & Sand (LL≤40, PI>10) — A-2-6",
+    "A-2-7": "Silty/Clayey Gravel & Sand (LL>40, PI>10) — A-2-7",
+    "A-3":   "Fine Sand — A-3",
+    "A-4":   "Silty Soil — A-4",
+    "A-5":   "Silty Soil, Highly Plastic — A-5",
+    "A-6":   "Clayey Soil — A-6",
+    "A-7-5": "Plastic Clayey Soil — A-7-5",
+    "A-7-6": "Highly Plastic Clayey Soil — A-7-6",
 }
 
 
@@ -87,9 +87,9 @@ class ClassificationResult:
     """Complete soil classification result."""
 
     uscs_symbol: str
-    uscs_name_id: str
+    uscs_name: str
     aashto_symbol: str
-    aashto_name_id: str
+    aashto_name: str
     liquid_limit: Optional[float]
     plastic_limit: Optional[float]
     plasticity_index: Optional[float]
@@ -470,15 +470,15 @@ def classify_soil(
     if is_organic and (liquid_limit is None or liquid_limit > 500):
         return ClassificationResult(
             uscs_symbol="Pt",
-            uscs_name_id=USCS_NAMES_ID["Pt"],
+            uscs_name=USCS_NAMES["Pt"],
             aashto_symbol="A-8",
-            aashto_name_id="Gambut / Tanah Sangat Organik — A-8",
+            aashto_name="Peat / Highly Organic Soil — A-8",
             liquid_limit=liquid_limit,
             plastic_limit=plastic_limit,
             plasticity_index=plasticity_index,
             gradation=gradation,
             classification_method="manual",
-            notes="Tanah gambut / highly organic — diidentifikasi dari deskripsi lapangan.",
+            notes="Peat / highly organic soil — identified from field description.",
         )
 
     # Attempt geolysis classification
@@ -536,18 +536,18 @@ def classify_soil(
             plasticity_index=plasticity_index,
             D60=D60,
         )
-        notes = "Klasifikasi manual (geolysis tidak tersedia)."
+        notes = "Manual classification (geolysis not available)."
 
-    uscs_name_id = USCS_NAMES_ID.get(uscs_symbol, f"Simbol tidak dikenal: {uscs_symbol}")
-    aashto_name_id = AASHTO_NAMES_ID.get(
-        aashto_symbol, f"Simbol tidak dikenal: {aashto_symbol}"
+    uscs_name = USCS_NAMES.get(uscs_symbol, f"Unknown symbol: {uscs_symbol}")
+    aashto_name = AASHTO_NAMES.get(
+        aashto_symbol, f"Unknown symbol: {aashto_symbol}"
     )
 
     return ClassificationResult(
         uscs_symbol=uscs_symbol,
-        uscs_name_id=uscs_name_id,
+        uscs_name=uscs_name,
         aashto_symbol=aashto_symbol,
-        aashto_name_id=aashto_name_id,
+        aashto_name=aashto_name,
         liquid_limit=liquid_limit,
         plastic_limit=plastic_limit,
         plasticity_index=plasticity_index,
