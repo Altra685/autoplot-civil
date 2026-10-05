@@ -25,7 +25,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Length
     # SI base: metre (m)
     # -----------------------------------------------------------------------
-    "Panjang (Length)": {
+    "Length": {
         "mm":   1e-3,         # millimetre
         "cm":   1e-2,         # centimetre
         "dm":   0.1,          # decimetre
@@ -45,7 +45,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Area
     # SI base: square metre (m²)
     # -----------------------------------------------------------------------
-    "Luas (Area)": {
+    "Area": {
         "mm²":    1e-6,
         "cm²":    1e-4,
         "dm²":    0.01,
@@ -84,7 +84,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Mass
     # SI base: kilogram (kg)
     # -----------------------------------------------------------------------
-    "Massa (Mass)": {
+    "Mass": {
         "mg":     1e-6,       # milligram
         "g":      1e-3,       # gram
         "kg":     1.0,        # kilogram (SI base)
@@ -101,7 +101,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Force
     # SI base: Newton (N)
     # -----------------------------------------------------------------------
-    "Gaya (Force)": {
+    "Force": {
         "N":    1.0,
         "kN":   1e3,
         "MN":   1e6,
@@ -117,7 +117,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Pressure / Stress
     # SI base: Pascal (Pa = N/m²)
     # -----------------------------------------------------------------------
-    "Tekanan/Tegangan (Pressure/Stress)": {
+    "Pressure/Stress": {
         "Pa":    1.0,
         "kPa":   1e3,
         "MPa":   1e6,
@@ -140,7 +140,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Density
     # SI base: kg/m³
     # -----------------------------------------------------------------------
-    "Densitas (Density)": {
+    "Density": {
         "kg/m³":   1.0,
         "g/cm³":   1000.0,
         "g/mL":    1000.0,
@@ -156,7 +156,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Unit Weight (Specific Weight = Weight per Volume)
     # SI base: N/m³
     # -----------------------------------------------------------------------
-    "Berat Satuan (Unit Weight)": {
+    "Unit Weight": {
         "N/m³":   1.0,
         "kN/m³":  1e3,
         "kgf/m³": 9.80665,
@@ -170,7 +170,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Velocity / Speed
     # SI base: m/s
     # -----------------------------------------------------------------------
-    "Kecepatan (Velocity)": {
+    "Velocity": {
         "m/s":    1.0,
         "km/h":   1.0 / 3.6,
         "cm/s":   0.01,
@@ -186,7 +186,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Discharge (Flow Rate)
     # SI base: m³/s
     # -----------------------------------------------------------------------
-    "Debit (Discharge)": {
+    "Discharge": {
         "m³/s":     1.0,
         "m³/hr":    1.0 / 3600.0,
         "m³/day":   1.0 / 86400.0,
@@ -206,7 +206,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Angle
     # SI base: radian (rad)
     # -----------------------------------------------------------------------
-    "Sudut (Angle)": {
+    "Angle": {
         "rad":    1.0,
         "deg":    0.017453293,  # π/180
         "grad":   0.015707963,  # π/200
@@ -226,7 +226,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Time
     # SI base: second (s)
     # -----------------------------------------------------------------------
-    "Waktu (Time)": {
+    "Time": {
         "s":      1.0,
         "min":    60.0,
         "hr":     3600.0,
@@ -242,7 +242,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Energy
     # SI base: Joule (J)
     # -----------------------------------------------------------------------
-    "Energi (Energy)": {
+    "Energy": {
         "J":      1.0,
         "kJ":     1e3,
         "MJ":     1e6,
@@ -262,7 +262,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Power
     # SI base: Watt (W)
     # -----------------------------------------------------------------------
-    "Daya (Power)": {
+    "Power": {
         "W":      1.0,
         "kW":     1e3,
         "MW":     1e6,
@@ -278,7 +278,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Permeability (Hydraulic Conductivity)
     # SI base: m/s
     # -----------------------------------------------------------------------
-    "Permeabilitas (Hydraulic Conductivity)": {
+    "Hydraulic Conductivity": {
         "m/s":   1.0,
         "cm/s":  0.01,
         "mm/s":  0.001,
@@ -294,7 +294,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Consolidation Coefficient Cv
     # SI base: m²/s
     # -----------------------------------------------------------------------
-    "Koefisien Konsolidasi Cv": {
+    "Consolidation Coefficient Cv": {
         "m²/s":    1.0,
         "m²/yr":   3.171e-8,
         "cm²/s":   1e-4,
@@ -307,7 +307,7 @@ UNIT_CONVERSIONS: dict[str, dict[str, float]] = {
     # Rainfall Intensity
     # SI base: mm/hr
     # -----------------------------------------------------------------------
-    "Intensitas Hujan (Rainfall Intensity)": {
+    "Rainfall Intensity": {
         "mm/hr":   1.0,
         "mm/min":  60.0,
         "mm/s":    3600.0,
@@ -352,7 +352,7 @@ def get_available_units(category: Optional[str] = None) -> dict[str, list[str]]:
 
     Examples
     --------
-    >>> get_available_units("Panjang (Length)")
+    >>> get_available_units("Length")
     {'Panjang (Length)': ['mm', 'cm', 'dm', 'm', 'km', ...]}
 
     >>> get_available_units()
