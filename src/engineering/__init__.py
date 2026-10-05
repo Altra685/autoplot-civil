@@ -1,8 +1,8 @@
 """
-Modul perhitungan teknik sipil (subset publik AutoPlot Civil).
+Modul perhitungan teknik sipil.
 
-Yang tersedia di sini: konversi satuan, kuat tekan beton, klasifikasi tanah,
-analisis saringan, dan pemadatan Proctor.
+Konversi satuan, kuat tekan beton, klasifikasi tanah, analisis saringan,
+dan pemadatan Proctor.
 """
 from __future__ import annotations
 
