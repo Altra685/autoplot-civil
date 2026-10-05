@@ -2,10 +2,6 @@
 
 Perhitungan dan grafik teknik sipil yang dapat dijalankan langsung di peramban.
 
-Repositori ini memuat sebagian modul dari aplikasi yang lebih lengkap. Modul
-lanjutan (penurunan, dinding penahan, daya dukung, hidrologi, SPT, Atterberg)
-tidak disertakan di sini.
-
 ## Modul
 
 | Modul | Isi |
